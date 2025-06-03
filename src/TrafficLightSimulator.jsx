@@ -1,8 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './app.css';
 
 const TrafficLightSimulator = () => {
   const [activeLight, setActiveLight] = useState('red');
+  useEffect(() => {
+    const count = setInterval(() => {
+      setActiveLight(preLight => {
+        if (preLight === 'red') return 'yellow';
+        if (preLight === 'yellow') return 'green';
+        if (preLight === 'green') return 'red';
+        return preLight;
+      });
+    }, 3000);
+
+    return () => clearInterval(count);
+  }, []);
+
 
   return (
     <div className="traffic-light-container">
